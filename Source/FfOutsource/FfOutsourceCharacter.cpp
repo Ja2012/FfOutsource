@@ -7,7 +7,7 @@
 #include "Components/CapsuleComponent.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
-
+#include "GameFramework/CharacterMovementComponent.h"
 
 //////////////////////////////////////////////////////////////////////////
 // AFfOutsourceCharacter
@@ -67,6 +67,17 @@ void AFfOutsourceCharacter::SetupPlayerInputComponent(class UInputComponent* Pla
 		//Moving
 		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AFfOutsourceCharacter::Move);
 
+		// Moving speed modification
+        EnhancedInputComponent->BindAction(MoveSpeedModSlowStartAction, ETriggerEvent::Triggered, this,  //
+			&AFfOutsourceCharacter::SwitchMovementSpeed, SlowMovementSpeed);
+        EnhancedInputComponent->BindAction(MoveSpeedModSlowStopAction, ETriggerEvent::Triggered, this,  //
+            &AFfOutsourceCharacter::SwitchMovementSpeed, NormalMovementSpeed);
+
+        EnhancedInputComponent->BindAction(MoveSpeedModFastStartAction, ETriggerEvent::Triggered, this,  //
+			&AFfOutsourceCharacter::SwitchMovementSpeed, FastlMovementSpeed);
+        EnhancedInputComponent->BindAction(MoveSpeedModFastStopAction, ETriggerEvent::Triggered, this,  //
+            &AFfOutsourceCharacter::SwitchMovementSpeed, NormalMovementSpeed);
+
 		//Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AFfOutsourceCharacter::Look);
 	}
@@ -97,6 +108,11 @@ void AFfOutsourceCharacter::Look(const FInputActionValue& Value)
 		AddControllerYawInput(LookAxisVector.X);
 		AddControllerPitchInput(LookAxisVector.Y);
 	}
+}
+
+void AFfOutsourceCharacter::SwitchMovementSpeed(const FInputActionValue& Value, const int32 Speed)
+{
+    GetCharacterMovement()->MaxWalkSpeed = Speed;
 }
 
 void AFfOutsourceCharacter::SetHasRifle(bool bNewHasRifle)

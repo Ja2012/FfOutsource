@@ -13,8 +13,9 @@ class USceneComponent;
 class UCameraComponent;
 class UAnimMontage;
 class USoundBase;
-
-UCLASS(config=Game)
+class UInputAction;
+	
+	UCLASS(config=Game)
 class AFfOutsourceCharacter : public ACharacter
 {
 	GENERATED_BODY()
@@ -33,11 +34,21 @@ class AFfOutsourceCharacter : public ACharacter
 
 	/** Jump Input Action */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Input, meta=(AllowPrivateAccess = "true"))
-	class UInputAction* JumpAction;
+	UInputAction* JumpAction;
 
 	/** Move Input Action */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Input, meta=(AllowPrivateAccess = "true"))
-	class UInputAction* MoveAction;
+	UInputAction* MoveAction;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Input, meta=(AllowPrivateAccess = "true"))
+	UInputAction* MoveSpeedModSlowStartAction;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Input, meta=(AllowPrivateAccess = "true"))
+    UInputAction* MoveSpeedModSlowStopAction;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Input, meta=(AllowPrivateAccess = "true"))
+	UInputAction* MoveSpeedModFastStartAction;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Input, meta=(AllowPrivateAccess = "true"))
+    UInputAction* MoveSpeedModFastStopAction;
 
 	
 public:
@@ -47,6 +58,14 @@ protected:
 	virtual void BeginPlay();
 
 public:
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
+    int32 SlowMovementSpeed = 150;
+
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
+    int32 NormalMovementSpeed = 600;
+
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
+    int32 FastlMovementSpeed = 1200;
 		
 	/** Look Input Action */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
@@ -70,6 +89,8 @@ protected:
 
 	/** Called for looking input */
 	void Look(const FInputActionValue& Value);
+
+	void SwitchMovementSpeed(const FInputActionValue& Value, const int32 Speed);
 
 protected:
 	// APawn interface

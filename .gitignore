@@ -1,0 +1,13 @@
+.vs/
+*.sln
+.git/
+.github/
+.vscode/
+.idea/
+DerivedDataCache/
+Intermediate/
+Saved/
+Binaries/
+Build/
+MyBuilds/
+*.sln.*

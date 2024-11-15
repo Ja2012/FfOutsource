@@ -58,13 +58,13 @@ protected:
 	virtual void BeginPlay();
 
 public:
-    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Input)
     int32 SlowMovementSpeed = 150;
 
-    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Input)
     int32 NormalMovementSpeed = 600;
 
-    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Input)
     int32 FastlMovementSpeed = 1200;
 		
 	/** Look Input Action */
